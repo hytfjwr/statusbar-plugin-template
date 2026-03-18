@@ -1,6 +1,6 @@
 PLUGIN_NAME := MyPlugin
 PLUGIN_ID := com.example.myplugin
-VERSION := 0.1.0
+VERSION ?= 0.1.0
 STATUSBARKIT_VERSION := 1.0.0
 SWIFT_VERSION := 6.2
 BUNDLE_NAME := $(shell echo $(PLUGIN_NAME) | tr 'A-Z' 'a-z')
