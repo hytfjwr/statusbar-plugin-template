@@ -29,7 +29,6 @@ Template for building [StatusBar](https://github.com/hytfjwr/StatusBar) plugins.
 | `make build` | Release build via SPM |
 | `make bundle` | Build + create `.statusplugin` bundle |
 | `make package` | Bundle + create `.statusplugin.zip` |
-| `make release` | Package + publish GitHub Release via `gh` |
 | `make dev` | Bundle + install to `~/.config/statusbar/plugins/` |
 | `make clean` | Remove build artifacts |
 
@@ -39,16 +38,24 @@ Template for building [StatusBar](https://github.com/hytfjwr/StatusBar) plugins.
 # Edit code, then:
 make dev
 # Plugin is installed locally — restart StatusBar or use Dev Mode to load
-
-# When ready to publish:
-# 1. Update VERSION in Makefile
-# 2. Commit and push
-make release
 ```
+
+## Releasing
+
+Releases are automated via GitHub Actions. To publish a new version:
+
+1. Update `VERSION` in `Makefile`
+2. Commit and push
+3. Create and push a tag:
+   ```bash
+   git tag v0.1.0
+   git push origin v0.1.0
+   ```
+
+The workflow builds, packages, and creates a GitHub Release automatically.
 
 ## Requirements
 
 - macOS 26+
 - Swift 6.2 / Xcode 26 beta
 - [StatusBarKit](https://github.com/hytfjwr/StatusBarKit) 1.0.0+
-- [GitHub CLI](https://cli.github.com) (`gh`) for `make release`
