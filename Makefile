@@ -3,7 +3,11 @@ PLUGIN_NAME := $(shell sed -n 's/.*name: *"\([^"]*\)".*/\1/p' Package.swift | he
 STATUSBARKIT_VERSION := $(shell sed -n 's/.*from: *"\([^"]*\)".*/\1/p' Package.swift)
 SWIFT_VERSION := $(shell head -1 Package.swift | sed 's/.*swift-tools-version: *//')
 
-PLUGIN_ID := com.example.myplugin
+# Extracted from source code (single source of truth)
+PLUGIN_SOURCE := Sources/$(PLUGIN_NAME)/$(PLUGIN_NAME).swift
+PLUGIN_ID := $(shell sed -n 's/.*id: *"\([^"]*\)".*/\1/p' $(PLUGIN_SOURCE))
+ENTRY_SYMBOL := $(shell sed -n 's/.*@_cdecl("\([^"]*\)").*/\1/p' $(PLUGIN_SOURCE))
+
 VERSION ?= 0.1.0
 BUNDLE_NAME := $(shell echo $(PLUGIN_NAME) | tr 'A-Z' 'a-z')
 
@@ -21,7 +25,7 @@ build:
 bundle: build
 	mkdir -p $(BUNDLE_DIR)
 	cp $(DYLIB) $(BUNDLE_DIR)/plugin.dylib
-	@echo '{\n  "id": "$(PLUGIN_ID)",\n  "name": "$(PLUGIN_NAME)",\n  "version": "$(VERSION)",\n  "statusBarKitVersion": "$(STATUSBARKIT_VERSION)",\n  "swiftVersion": "$(SWIFT_VERSION)",\n  "entrySymbol": "createStatusBarPlugin"\n}' > $(BUNDLE_DIR)/manifest.json
+	@echo '{\n  "id": "$(PLUGIN_ID)",\n  "name": "$(PLUGIN_NAME)",\n  "version": "$(VERSION)",\n  "statusBarKitVersion": "$(STATUSBARKIT_VERSION)",\n  "swiftVersion": "$(SWIFT_VERSION)",\n  "entrySymbol": "$(ENTRY_SYMBOL)"\n}' > $(BUNDLE_DIR)/manifest.json
 	@echo "Bundle created: $(BUNDLE_DIR)"
 
 package: bundle
