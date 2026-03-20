@@ -42,17 +42,11 @@ make dev
 
 ## Releasing
 
-Releases are automated via GitHub Actions. To publish a new version:
+Releases are fully automated via GitHub Actions:
 
-1. Update `VERSION` in `Makefile`
-2. Commit and push
-3. Create and push a tag:
-   ```bash
-   git tag v0.1.0
-   git push origin v0.1.0
-   ```
-
-The workflow builds, packages, and creates a GitHub Release automatically.
+1. Go to **Actions → Release** in your GitHub repository
+2. Click **"Run workflow"** and select a bump type (`patch` / `minor` / `major`)
+3. The workflow automatically calculates the next version, builds, packages, creates a git tag, and publishes a GitHub Release
 
 ## Requirements
 
