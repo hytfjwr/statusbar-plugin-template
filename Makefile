@@ -1,8 +1,10 @@
-PLUGIN_NAME := MyPlugin
+# Extracted from Package.swift (single source of truth)
+PLUGIN_NAME := $(shell sed -n 's/.*name: *"\([^"]*\)".*/\1/p' Package.swift | head -1)
+STATUSBARKIT_VERSION := $(shell sed -n 's/.*from: *"\([^"]*\)".*/\1/p' Package.swift)
+SWIFT_VERSION := $(shell head -1 Package.swift | sed 's/.*swift-tools-version: *//')
+
 PLUGIN_ID := com.example.myplugin
 VERSION ?= 0.1.0
-STATUSBARKIT_VERSION := 1.0.0
-SWIFT_VERSION := 6.2
 BUNDLE_NAME := $(shell echo $(PLUGIN_NAME) | tr 'A-Z' 'a-z')
 
 BUILD_DIR := .build/release
